@@ -1,11 +1,26 @@
 import sqlite3
 
-# create databasa and append data
+# create database
+def create_base():
+        connect = sqlite3.connect("database.db")
+        cursor = connect.cursor()
+        cursor.execute(f"""CREATE TABLE "Data" (
+                            "id"	INTEGER NOT NULL UNIQUE,
+                            "url"	TEXT,
+                            "date"	TEXT,
+                            "title"	TEXT,
+                            "content"	TEXT,
+                            PRIMARY KEY("id" AUTOINCREMENT)
+                        );""")
+        connect.commit()
+        connect.close()
+# create_base()
+
+# append data
 def add_data(url, date, title, content):
         connect = sqlite3.connect("database.db")
         cursor = connect.cursor()
-        cursor.execute(f"CREATE TABLE IF NOT EXISTS Data (ulr text, date text, title text, content text) ")
-        cursor.execute(f"INSERT INTO Data VALUES ('{url}', '{date}', '{title}', '{content}')")
+        cursor.execute(f"INSERT INTO Data (url, date, title, content) VALUES ('{url}', '{date}', '{title}', '{content}')")
         connect.commit()
         connect.close()
 
@@ -13,6 +28,7 @@ def add_data(url, date, title, content):
 def get_last_title():
         connect = sqlite3.connect("database.db")
         cursor = connect.cursor()
-        title = cursor.execute(f"SELECT title FROM Data ORDER BY title DESC LIMIT 1; ").fetchone()
+        title = cursor.execute(f"SELECT title FROM Data ORDER BY id DESC LIMIT 1").fetchone()
+        cursor.close()
         connect.close()
         return title[0]
