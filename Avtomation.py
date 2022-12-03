@@ -9,7 +9,9 @@ kun_uz = 'https://kun.uz/uz' # Uzb language url or (/ru)
 while True:
     try:
         new_title = get_new_title().strip()
+        print(new_title)
         last_title = get_last_title().strip()
+        print(last_title)
         if new_title != last_title:
             Scraping_new_data(kun_uz=kun_uz)
     except:

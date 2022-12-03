@@ -9,4 +9,5 @@ import os
 conn = connect('database.db')
 result = pd.read_sql('SELECT * FROM Data', con=conn)
 result.to_csv('Data.csv', index=False)
+conn.close()
 os.remove("database.db")
