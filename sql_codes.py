@@ -1,7 +1,7 @@
 import sqlite3
 
-# create database and append data
-def add_data(url, date, title, content):
+# create database
+def create_db():
         connect = sqlite3.connect("database.db")
         cursor = connect.cursor()
         cursor.execute(f"""CREATE TABLE IF NOT EXISTS "Data" (
@@ -12,6 +12,13 @@ def add_data(url, date, title, content):
                                     "content"	TEXT,
                                     PRIMARY KEY("id" AUTOINCREMENT)
                                 );""")
+        connect.commit()
+        connect.close()
+
+# append data
+def add_data(url, date, title, content):
+        connect = sqlite3.connect("database.db")
+        cursor = connect.cursor()
         cursor.execute(f"INSERT INTO Data (url, date, title, content) VALUES ('{url}', '{date}', '{title}', '{content}')")
         connect.commit()
         connect.close()
